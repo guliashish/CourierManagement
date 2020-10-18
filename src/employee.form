@@ -88,12 +88,12 @@
                           </Group>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="empPassword1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="empPassword" alignment="0" max="32767" attributes="0"/>
                               <Component id="empRegister1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="empEmail1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="empPhone1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="empEmail" alignment="0" max="32767" attributes="0"/>
+                              <Component id="empPhone" alignment="0" max="32767" attributes="0"/>
                               <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
-                              <Component id="empName1" alignment="1" max="32767" attributes="0"/>
+                              <Component id="empName" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -136,17 +136,17 @@
                               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="empName1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="empName" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="empEmail1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="empEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="empPhone1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="empPhone" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -156,7 +156,7 @@
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="empPassword1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="empPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="empRegister1" min="-2" pref="35" max="-2" attributes="0"/>
@@ -228,7 +228,7 @@
             <Property name="text" type="java.lang.String" value="Name"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="empName1">
+        <Component class="javax.swing.JTextField" name="empName">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel21">
           <Properties>
@@ -238,7 +238,7 @@
             <Property name="text" type="java.lang.String" value="Email"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="empEmail1">
+        <Component class="javax.swing.JTextField" name="empEmail">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel22">
           <Properties>
@@ -248,7 +248,7 @@
             <Property name="text" type="java.lang.String" value="Phone No."/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="empPhone1">
+        <Component class="javax.swing.JTextField" name="empPhone">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel23">
           <Properties>
@@ -265,7 +265,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="empAddress1">
+            <Component class="javax.swing.JTextArea" name="empAddress">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
@@ -286,6 +286,7 @@
             <Property name="text" type="java.lang.String" value="Register"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="empRegister1MouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empRegister1ActionPerformed"/>
           </Events>
         </Component>
@@ -296,7 +297,7 @@
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordField3">
         </Component>
-        <Component class="javax.swing.JTextField" name="empPassword1">
+        <Component class="javax.swing.JTextField" name="empPassword">
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>

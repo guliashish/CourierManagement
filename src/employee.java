@@ -1,3 +1,8 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -35,19 +40,19 @@ public class employee extends javax.swing.JFrame {
         empLogin1 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        empName1 = new javax.swing.JTextField();
+        empName = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        empEmail1 = new javax.swing.JTextField();
+        empEmail = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        empPhone1 = new javax.swing.JTextField();
+        empPhone = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        empAddress1 = new javax.swing.JTextArea();
+        empAddress = new javax.swing.JTextArea();
         jLabel24 = new javax.swing.JLabel();
         empRegister1 = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
         jPasswordField3 = new javax.swing.JPasswordField();
-        empPassword1 = new javax.swing.JTextField();
+        empPassword = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,14 +86,19 @@ public class employee extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel23.setText("Address");
 
-        empAddress1.setColumns(20);
-        empAddress1.setRows(5);
-        jScrollPane2.setViewportView(empAddress1);
+        empAddress.setColumns(20);
+        empAddress.setRows(5);
+        jScrollPane2.setViewportView(empAddress);
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel24.setText("Password");
 
         empRegister1.setText("Register");
+        empRegister1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                empRegister1MouseClicked(evt);
+            }
+        });
         empRegister1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 empRegister1ActionPerformed(evt);
@@ -140,12 +150,12 @@ public class employee extends javax.swing.JFrame {
                             .addComponent(jLabel24))
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(empPassword1)
+                            .addComponent(empPassword)
                             .addComponent(empRegister1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(empEmail1)
-                            .addComponent(empPhone1)
+                            .addComponent(empEmail)
+                            .addComponent(empPhone)
                             .addComponent(jScrollPane2)
-                            .addComponent(empName1, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(empName, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jButton3)
@@ -178,15 +188,15 @@ public class employee extends javax.swing.JFrame {
                             .addGap(56, 56, 56)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel20)
-                                .addComponent(empName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(empName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(10, 10, 10)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel21)
-                                .addComponent(empEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(empEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(10, 10, 10)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel22)
-                                .addComponent(empPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(empPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel23)
@@ -194,7 +204,7 @@ public class employee extends javax.swing.JFrame {
                             .addGap(10, 10, 10)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel24)
-                                .addComponent(empPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(empPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
                             .addComponent(empRegister1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -228,6 +238,38 @@ public class employee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void empRegister1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empRegister1ActionPerformed
+        String name = empName.getText();
+        String email = empEmail.getText();
+        String phone = empPhone.getText();
+        String address = empAddress.getText();
+        String password = empPassword.getText();
+
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+        try (Connection con = DriverManager.getConnection(connectionUrl); ) {
+
+            PreparedStatement stmt=con.prepareStatement("insert into emp_tbl values(?,?,?,?,?)");  
+            stmt.setString(1,name); 
+            stmt.setString(2,email);
+            stmt.setString(3,phone);
+            stmt.setString(4,address);
+            stmt.setString(5,password);
+
+            int i=stmt.executeUpdate();  
+            System.out.println(i+" records inserted");  
+            empName.setText("");
+            empEmail.setText("");
+            empPhone.setText("");
+            empAddress.setText("");
+            empPassword.setText("");
+
+            con.close(); 
+
+        }
+
+        catch (Exception e) {
+            System.out.println(e);
+        }
+
         new registerSuccess().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_empRegister1ActionPerformed
@@ -236,6 +278,40 @@ public class employee extends javax.swing.JFrame {
         new home().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void empRegister1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empRegister1MouseClicked
+//        String name = empName.getText();
+//        String email = empEmail.getText();
+//        String phone = empPhone.getText();
+//        String address = empAddress.getText();
+//        String password = empPassword.getText();
+//
+//        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+//        try (Connection con = DriverManager.getConnection(connectionUrl); ) {
+//
+//            PreparedStatement stmt=con.prepareStatement("insert into emp_tbl values(?,?,?,?,?)");  
+//            stmt.setString(1,name); 
+//            stmt.setString(2,email);
+//            stmt.setString(3,phone);
+//            stmt.setString(4,address);
+//            stmt.setString(5,password);
+//
+//            int i=stmt.executeUpdate();  
+//            System.out.println(i+" records inserted");  
+//            empName.setText("");
+//            empEmail.setText("");
+//            empPhone.setText("");
+//            empAddress.setText("");
+//            empPassword.setText("");
+//
+//            con.close(); 
+//
+//        }
+//
+//        catch (Exception e) {
+//            System.out.println(e);
+//        }
+    }//GEN-LAST:event_empRegister1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -273,12 +349,12 @@ public class employee extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea empAddress1;
-    private javax.swing.JTextField empEmail1;
+    private javax.swing.JTextArea empAddress;
+    private javax.swing.JTextField empEmail;
     private javax.swing.JButton empLogin1;
-    private javax.swing.JTextField empName1;
-    private javax.swing.JTextField empPassword1;
-    private javax.swing.JTextField empPhone1;
+    private javax.swing.JTextField empName;
+    private javax.swing.JTextField empPassword;
+    private javax.swing.JTextField empPhone;
     private javax.swing.JButton empRegister1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel13;
