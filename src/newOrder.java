@@ -1,7 +1,9 @@
 
+import com.placeholder.PlaceHolder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 
 /*
@@ -15,12 +17,26 @@ import java.text.SimpleDateFormat;
  * @author Ashish Kumar
  */
 public class newOrder extends javax.swing.JFrame {
-
+    
+    // Placeholder for text fields
+    PlaceHolder p1;
     /**
      * Creates new form newOrder
      */
     public newOrder() {
         initComponents();
+        p1=new PlaceHolder(custPickName,"Name");
+        p1=new PlaceHolder(custPickPhone,"Phone");
+        p1=new PlaceHolder(custPickAddress,"Address");
+        p1=new PlaceHolder(custPickPinCode,"PinCode");
+        p1=new PlaceHolder(custPickState,"State");
+        
+        p1=new PlaceHolder(custDelName,"Name");
+        p1=new PlaceHolder(custDelPhone,"Phone");
+        p1=new PlaceHolder(custDelAddress,"Address");
+        p1=new PlaceHolder(custDelPinCode,"PinCode");
+        p1=new PlaceHolder(custDelState,"State");
+        
     }
 
     /**
@@ -63,8 +79,6 @@ public class newOrder extends javax.swing.JFrame {
         custDelState = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         ordDate = new com.toedter.calendar.JDateChooser();
-        ordServiceType = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
@@ -116,44 +130,16 @@ public class newOrder extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel26.setText("Pickup From");
 
-        custPickName.setText("Name");
-        custPickName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                KeyChange(evt);
-            }
-        });
-
-        custPickPhone.setText("Phone");
-
         custPickAddress.setColumns(20);
         custPickAddress.setRows(5);
-        custPickAddress.setText("Address");
         jScrollPane1.setViewportView(custPickAddress);
-
-        custPickPinCode.setText("PinCode(Origin)");
-
-        custPickState.setText("State");
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel30.setText("Delivery To");
 
-        custDelName.setText("Name");
-
-        custDelPhone.setText("Phone");
-        custDelPhone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                custDelPhoneActionPerformed(evt);
-            }
-        });
-
         custDelAddress.setColumns(20);
         custDelAddress.setRows(5);
-        custDelAddress.setText("Address");
         jScrollPane2.setViewportView(custDelAddress);
-
-        custDelPinCode.setText("PinCode(Destination)");
-
-        custDelState.setText("State");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -242,15 +228,6 @@ public class newOrder extends javax.swing.JFrame {
 
         jScrollPane4.setViewportView(jPanel3);
 
-        ordServiceType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Premium", "Gold", "Silver" }));
-        ordServiceType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ordServiceTypeActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Service Type");
-
         jLabel2.setText("Date");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -276,14 +253,12 @@ public class newOrder extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ordContent, 0, 122, Short.MAX_VALUE)
                             .addComponent(ordShipmentType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ordWeight, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ordServiceType, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ordDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(145, 145, 145))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -301,34 +276,30 @@ public class newOrder extends javax.swing.JFrame {
                     .addComponent(jLabel25))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(50, 50, 50)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(ordContent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel28)
                             .addComponent(ordShipmentType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ordWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel29))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ordServiceType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ordDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(138, 138, 138)
+                            .addComponent(jLabel29)
+                            .addComponent(ordWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(ordDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(187, 187, 187)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -355,25 +326,17 @@ public class newOrder extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ordServiceTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordServiceTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ordServiceTypeActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new home().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void custDelPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custDelPhoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_custDelPhoneActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -412,28 +375,44 @@ public class newOrder extends javax.swing.JFrame {
             stmt.setString(5,orderDate);
             stmt.setInt(6,0);
             
-            int i=stmt.executeUpdate();
-            //System.out.println(i+" records inserted");
+            int custId = 0;
             
-            PreparedStatement stmt1=con.prepareStatement("insert into cust_tbl values(?,?,?,?,?,?,?,?,?,?)");
-            stmt1.setString(1,customerPickName);
-            stmt1.setString(2,customerPickPhone);
-            stmt1.setString(3,customerPickAddress);
-            stmt1.setString(4,customerPickPinCode);
-            stmt1.setString(5,customerPickState);
-            stmt1.setString(6,customerDelName);
-            stmt1.setString(7,customerDelPhone);
-            stmt1.setString(8,customerDelAddress);
-            stmt1.setString(9,customerDelPinCode);
-            stmt1.setString(10,customerDelState);
+            int i=stmt.executeUpdate();
+            con.close();
+            Connection con1 = DriverManager.getConnection(connectionUrl);
+            //System.out.println(i+" records inserted");
+            String sql = "Select * from ord_tbl";
+            PreparedStatement pst=con1.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                 custId = Integer.parseInt(rs.getString("ordId"));
+                 System.out.println(custId);
+            }
+           
+            PreparedStatement stmt1=con1.prepareStatement("insert into cust_tbl values(?,?,?,?,?,?,?,?,?,?,?)");
+            stmt1.setInt(1,custId);
+            stmt1.setString(2,customerPickName);
+            stmt1.setString(3,customerPickPhone);
+            stmt1.setString(4,customerPickAddress);
+            stmt1.setString(5,customerPickPinCode);
+            stmt1.setString(6,customerPickState);
+            stmt1.setString(7,customerDelName);
+            stmt1.setString(8,customerDelPhone);
+            stmt1.setString(9,customerDelAddress);
+            stmt1.setString(10,customerDelPinCode);
+            stmt1.setString(11,customerDelState);
             
             
             int j=stmt1.executeUpdate();
+          
             
             System.out.println((i+j)+" records inserted");
  
             ordDate.setDate(null);
-            con.close();
+            
+            con1.close();
+            this.dispose();
+            new newOrder().setVisible(true);
         }
         catch (Exception e) {
             System.out.println(e);
@@ -441,10 +420,6 @@ public class newOrder extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void KeyChange(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KeyChange
-        custPickName.setText("");
-    }//GEN-LAST:event_KeyChange
 
     /**
      * @param args the command line arguments
@@ -494,7 +469,6 @@ public class newOrder extends javax.swing.JFrame {
     private javax.swing.JTextField custPickState;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel25;
@@ -514,7 +488,6 @@ public class newOrder extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JComboBox<String> ordContent;
     private com.toedter.calendar.JDateChooser ordDate;
-    private javax.swing.JComboBox<String> ordServiceType;
     private javax.swing.JComboBox<String> ordShipmentType;
     private javax.swing.JComboBox<String> ordWeight;
     // End of variables declaration//GEN-END:variables
