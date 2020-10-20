@@ -29,6 +29,9 @@ public class admin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(400, 200));
+        setPreferredSize(new java.awt.Dimension(1000, 655));
+        setSize(new java.awt.Dimension(1000, 655));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Home");
@@ -44,13 +47,13 @@ public class admin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton1)
-                .addGap(0, 331, Short.MAX_VALUE))
+                .addGap(0, 931, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jButton1)
-                .addGap(0, 275, Short.MAX_VALUE))
+                .addGap(0, 630, Short.MAX_VALUE))
         );
 
         pack();

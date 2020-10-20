@@ -31,6 +31,8 @@ public class registerSuccess extends javax.swing.JFrame {
         loginPage = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(400, 200));
+        setPreferredSize(new java.awt.Dimension(1000, 655));
 
         register.setVisible(true);
 
@@ -67,7 +69,7 @@ public class registerSuccess extends javax.swing.JFrame {
                 .addComponent(jLabel18)
                 .addGap(36, 36, 36)
                 .addComponent(loginPage)
-                .addContainerGap(449, Short.MAX_VALUE))
+                .addContainerGap(461, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -83,7 +85,7 @@ public class registerSuccess extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 639, Short.MAX_VALUE)
+            .addGap(0, 651, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
