@@ -16,12 +16,13 @@ import javax.swing.JOptionPane;
  * @author Ashish Kumar
  */
 public class employee extends javax.swing.JFrame {
-
+    public static int global_id;
     /**
      * Creates new form employee
      */
     public employee() {
         initComponents();
+        
     }
 
     /**
@@ -308,7 +309,11 @@ public class employee extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
             if(rs.next())
             {
-              new employeeLogin().setVisible(true);
+             global_id = rs.getInt("empId");
+             System.out.println(global_id);
+             employeeLogin empLogin =  new employeeLogin(global_id);
+             empLogin.jLabel2.setText(rs.getString(2));
+             empLogin.setVisible(true);
               this.dispose();
               
             }
@@ -396,7 +401,7 @@ public class employee extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField userName;
+    public javax.swing.JTextField userName;
     private javax.swing.JTextField userPassword;
     // End of variables declaration//GEN-END:variables
 }
