@@ -37,9 +37,36 @@ public class addOrders extends javax.swing.JFrame {
     public addOrders(int v) {
         initComponents();
         global_int=v;
+        fetchDataFromDb();
         
-        
-
+    }
+    public void fetchDataFromDb()
+    {
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+        try (Connection con = DriverManager.getConnection(connectionUrl); ) 
+        {               
+            PreparedStatement pst=con.prepareStatement("Select * from ord_tbl where ordStatus='Booked'and ordEmpId='0' "); 
+            ResultSet rs = pst.executeQuery();           
+            while(rs.next())
+            {
+              orderId=String.valueOf(rs.getInt("ordId"));
+              orderContent=rs.getString("ordContent");
+              orderShipmentType=rs.getString("ordShipmentType");
+              orderWeight=rs.getString("ordWeight");
+              orderStatus=rs.getString("ordStatus");
+              orderDate=String.valueOf(rs.getDate("ordDate"));
+              orderEmpId=rs.getString("ordEmpId");
+              String tbData[]={orderId,orderContent,orderShipmentType,orderWeight,orderStatus,orderDate,orderEmpId};
+              DefaultTableModel tblModel=(DefaultTableModel)ord_Table.getModel();
+      
+              tblModel.addRow(tbData);
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+     
     }
     
     /**
@@ -51,7 +78,6 @@ public class addOrders extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Submit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -75,13 +101,6 @@ public class addOrders extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(900, 600));
-
-        Submit.setText("Load ");
-        Submit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SubmitActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("OrderId");
@@ -127,6 +146,11 @@ public class addOrders extends javax.swing.JFrame {
         jButton1.setText("Remove");
 
         saveChanges_btn.setText("Save Changes");
+        saveChanges_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveChanges_btnActionPerformed(evt);
+            }
+        });
 
         ord_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -182,9 +206,7 @@ public class addOrders extends javax.swing.JFrame {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -209,7 +231,6 @@ public class addOrders extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Submit)
                         .addComponent(Add_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(saveChanges_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -248,45 +269,6 @@ public class addOrders extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
-        
-        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
-        try (Connection con = DriverManager.getConnection(connectionUrl); ) 
-        {           
-            
-            PreparedStatement pst=con.prepareStatement("Select * from ord_tbl where ordStatus='Booked' "); 
-            ResultSet rs = pst.executeQuery();
-            
-            if(rs.next())
-            {
-              orderId=String.valueOf(rs.getInt("ordId"));
-              System.out.println(ordId);
-              orderContent=rs.getString("ordContent");
-              orderShipmentType=rs.getString("ordShipmentType");
-              orderWeight=rs.getString("ordWeight");
-              orderStatus=rs.getString("ordStatus");
-              orderDate=String.valueOf(rs.getDate("ordDate"));
-              orderEmpId=rs.getString("ordEmpId");
-              System.out.println("Data Retrieved");
-              String tbData[]={orderId,orderContent,orderShipmentType,orderWeight,orderStatus,orderDate,orderEmpId};
-              DefaultTableModel tblModel=(DefaultTableModel)ord_Table.getModel();
-      
-              tblModel.addRow(tbData);
-            }
-            else
-            {
-               JOptionPane.showMessageDialog(this,"Database Error");
-              
-            }
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-     
-       
-    }//GEN-LAST:event_SubmitActionPerformed
 
     private void ord_Table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ord_Table2MouseClicked
         
@@ -360,6 +342,31 @@ public class addOrders extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void saveChanges_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChanges_btnActionPerformed
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+        try(Connection con = DriverManager.getConnection(connectionUrl);)
+        {
+            
+            int rows=ord_Table2.getRowCount();
+            TableModel model=ord_Table2.getModel();
+            for(int i=0;i<rows;i++)
+            {
+                String OrderID=model.getValueAt(i,0).toString();
+                String OrderStatus=model.getValueAt(i,4).toString();
+                PreparedStatement ps = con.prepareStatement("UPDATE ord_tbl SET ordStatus = ?,ordEmpId=? WHERE ordId = ?");
+                ps.setString(1,"Pending");
+                ps.setString(2,String.valueOf(global_int));
+                ps.setString(3,OrderID);
+                ps.executeUpdate();
+            }
+            
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }//GEN-LAST:event_saveChanges_btnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -397,7 +404,6 @@ public class addOrders extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add_btn;
-    private javax.swing.JButton Submit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
