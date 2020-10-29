@@ -314,7 +314,7 @@ public class employeeLogin extends javax.swing.JFrame {
   
              try (Connection con = DriverManager.getConnection(connectionUrl); ) 
         {            
-            PreparedStatement pst=con.prepareStatement("Select * from emp_tbl where empId=?");
+            PreparedStatement pst=con.prepareStatement("Select * from emp_tbl where empId=? ");
             pst.setInt(1,global_int); 
             ResultSet rs = pst.executeQuery();
             if(rs.next())
@@ -355,7 +355,8 @@ public class employeeLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       
+       new deliveredOrders(global_int).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -364,7 +365,7 @@ public class employeeLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new pendingOrders().setVisible(true);
+        new pendingOrders(global_int).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

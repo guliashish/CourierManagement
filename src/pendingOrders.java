@@ -1,3 +1,11 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,12 +17,54 @@
  * @author Ashish Kumar
  */
 public class pendingOrders extends javax.swing.JFrame {
-
-    /**
-     * Creates new form pendingOrders
-     */
+    public static int global_int;
+    String orderId;
+    String orderContent;
+    String orderShipmentType;
+    String orderWeight;
+    String orderStatus;
+    String orderDate;
+    String orderEmpId;
+    
     public pendingOrders() {
         initComponents();
+    }
+    public pendingOrders(int v)
+    {
+        initComponents();
+        global_int=v;
+        fetchDataFromDb();
+    }
+    public void fetchDataFromDb()
+    {
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+        try (Connection con = DriverManager.getConnection(connectionUrl); ) 
+        {               
+            String empID=String.valueOf(global_int);
+            System.out.println("Pankaj"+empID);
+            PreparedStatement pst=con.prepareStatement("Select * from ord_tbl where ordStatus=? and ordEmpId=? "); 
+            pst.setString(1,"Pending");
+            pst.setString(2, empID);
+            ResultSet rs = pst.executeQuery();           
+            while(rs.next())
+            {
+              orderId=String.valueOf(rs.getInt("ordId"));
+              orderContent=rs.getString("ordContent");
+              orderShipmentType=rs.getString("ordShipmentType");
+              orderWeight=rs.getString("ordWeight");
+              orderStatus=rs.getString("ordStatus");
+              orderDate=String.valueOf(rs.getDate("ordDate"));
+              orderEmpId=rs.getString("ordEmpId");
+              String tbData[]={orderId,orderContent,orderShipmentType,orderWeight,orderStatus,orderDate,orderEmpId};
+              DefaultTableModel tblModel=(DefaultTableModel)ord_Pending_Table.getModel();   
+              tblModel.addRow(tbData);
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+     
     }
 
     /**
@@ -40,9 +90,14 @@ public class pendingOrders extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         ordId = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ord_Table = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ord_Pending_Table = new javax.swing.JTable();
+        order_Status = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        order_Id = new javax.swing.JLabel();
+        order_Content = new javax.swing.JLabel();
+        order_Shipment = new javax.swing.JLabel();
+        order_Weight = new javax.swing.JLabel();
+        order_Date = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +110,11 @@ public class pendingOrders extends javax.swing.JFrame {
         });
 
         saveChanges_btn.setText("Update Status");
+        saveChanges_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveChanges_btnActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("OrderId");
@@ -74,8 +134,8 @@ public class pendingOrders extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Date");
 
-        ord_Table.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        ord_Table.setModel(new javax.swing.table.DefaultTableModel(
+        ord_Pending_Table.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ord_Pending_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -83,14 +143,29 @@ public class pendingOrders extends javax.swing.JFrame {
                 "ordId", "ordContent", "ordShipmentType", "ordWeight", "ordStatus", "ordDate", "ordEmpId"
             }
         ));
-        ord_Table.setPreferredSize(new java.awt.Dimension(1000, 655));
-        jScrollPane1.setViewportView(ord_Table);
+        ord_Pending_Table.setPreferredSize(new java.awt.Dimension(1000, 655));
+        ord_Pending_Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ord_Pending_TableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(ord_Pending_Table);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Booked", "Pending", "Delivered" }));
+        order_Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Delivered" }));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Pending Orders");
+
+        order_Id.setText("jLabel8");
+
+        order_Content.setText("jLabel8");
+
+        order_Shipment.setText("jLabel8");
+
+        order_Weight.setText("jLabel8");
+
+        order_Date.setText("jLabel8");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,10 +185,22 @@ public class pendingOrders extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ordShipmentType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ordWeight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ordContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ordId, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(order_Shipment, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ordShipmentType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(order_Weight, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ordWeight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(order_Content, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ordContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(order_Id, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ordId, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(80, 80, 80)
@@ -122,11 +209,14 @@ public class pendingOrders extends javax.swing.JFrame {
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ordDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(order_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ordDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(order_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(saveChanges_btn)))
                         .addGap(40, 40, 40))))
             .addGroup(layout.createSequentialGroup()
@@ -150,19 +240,23 @@ public class pendingOrders extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ordId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(order_Id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(order_Content, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(ordContent, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(order_Status, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ordDate, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(order_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -170,11 +264,14 @@ public class pendingOrders extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ordShipmentType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ordShipmentType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(order_Shipment, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ordWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saveChanges_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(saveChanges_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(order_Weight, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(50, 50, 50))
         );
 
@@ -185,6 +282,65 @@ public class pendingOrders extends javax.swing.JFrame {
         new employeeLogin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void ord_Pending_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ord_Pending_TableMouseClicked
+        int i=ord_Pending_Table.getSelectedRow();
+        TableModel model=ord_Pending_Table.getModel();
+        order_Id.setText(model.getValueAt(i, 0).toString());
+        order_Content.setText(model.getValueAt(i, 1).toString());
+
+        order_Shipment.setText(model.getValueAt(i, 2).toString());
+        order_Weight.setText(model.getValueAt(i, 3).toString());
+        String Status=model.getValueAt(i, 4).toString();
+        switch(Status)
+        {
+            case "Pending":
+                order_Status.setSelectedIndex(0);
+                break;
+            case "Delivered":
+                order_Status.setSelectedIndex(1);
+                break;
+        }
+        order_Date.setText(model.getValueAt(i, 5).toString());
+
+        //--------Assigning values to class Variables so that it can be used by any methods--------//
+        orderId=model.getValueAt(i, 0).toString();
+        orderContent=model.getValueAt(i, 1).toString();
+        orderShipmentType=model.getValueAt(i, 2).toString();
+        orderWeight=model.getValueAt(i, 3).toString();
+        orderStatus=model.getValueAt(i, 4).toString();
+        orderDate=model.getValueAt(i, 5).toString();
+        orderEmpId=model.getValueAt(i, 6).toString();
+    }//GEN-LAST:event_ord_Pending_TableMouseClicked
+
+    private void saveChanges_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChanges_btnActionPerformed
+        
+        //-----This code isnot compeleted yet-------///??????????????????????????????????????
+        //????????????????????????????????????????????????????????
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+        try(Connection con = DriverManager.getConnection(connectionUrl);)
+        {
+            
+            int rows=ord_Pending_Table.getSelectedRow();
+            TableModel model=ord_Pending_Table.getModel();
+            
+            String OrderID=model.getValueAt(rows,0).toString();
+            String OrderStatus=(String)order_Status.getSelectedItem();
+            PreparedStatement ps = con.prepareStatement("UPDATE ord_tbl SET ordStatus = ?,ordEmpId=? WHERE ordId = ?");
+            System.out.println(OrderStatus);
+            System.out.println(orderStatus);
+            ps.setString(1,OrderStatus);
+            ps.setString(2,String.valueOf(global_int));
+            ps.setString(3,OrderID);
+            ps.executeUpdate();
+ 
+            
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }//GEN-LAST:event_saveChanges_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,7 +379,6 @@ public class pendingOrders extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -237,7 +392,13 @@ public class pendingOrders extends javax.swing.JFrame {
     private javax.swing.JLabel ordId;
     private javax.swing.JLabel ordShipmentType;
     private javax.swing.JLabel ordWeight;
-    private javax.swing.JTable ord_Table;
+    private javax.swing.JTable ord_Pending_Table;
+    private javax.swing.JLabel order_Content;
+    private javax.swing.JLabel order_Date;
+    private javax.swing.JLabel order_Id;
+    private javax.swing.JLabel order_Shipment;
+    private javax.swing.JComboBox<String> order_Status;
+    private javax.swing.JLabel order_Weight;
     private javax.swing.JButton saveChanges_btn;
     // End of variables declaration//GEN-END:variables
 }
