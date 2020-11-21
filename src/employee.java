@@ -62,7 +62,6 @@ public class employee extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Register | Login");
         setLocation(new java.awt.Point(400, 200));
-        setPreferredSize(new java.awt.Dimension(900, 650));
         setSize(new java.awt.Dimension(900, 650));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(900, 650));

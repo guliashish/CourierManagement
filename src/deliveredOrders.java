@@ -89,8 +89,6 @@ public class deliveredOrders extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         ordWeight = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        order_Status2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
         order_Id2 = new javax.swing.JLabel();
         order_Content2 = new javax.swing.JLabel();
         order_Shipment2 = new javax.swing.JLabel();
@@ -99,6 +97,7 @@ public class deliveredOrders extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        order_Status2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 650));
@@ -137,26 +136,6 @@ public class deliveredOrders extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Status");
-
-        order_Status2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Delivered" }));
-
-        jButton1.setText("Submit");
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        order_Id2.setText("jLabel8");
-
-        order_Content2.setText("jLabel8");
-
-        order_Shipment2.setText("jLabel8");
-
-        order_Weight2.setText("jLabel8");
-
-        order_Date2.setText("jLabel8");
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -237,8 +216,7 @@ public class deliveredOrders extends javax.swing.JFrame {
                         .addComponent(order_Date2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ordDate, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(order_Status2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(order_Status2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(
@@ -267,15 +245,14 @@ public class deliveredOrders extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(order_Status2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
+                            .addComponent(order_Status2))
+                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ordDate, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(order_Date2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ordWeight, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(order_Weight2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -290,32 +267,6 @@ public class deliveredOrders extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
-        try(Connection con = DriverManager.getConnection(connectionUrl);)
-        {
-            
-            int rows=ord_Delivered_Table.getSelectedRow();
-            TableModel model=ord_Delivered_Table.getModel();
-            
-            String OrderID=model.getValueAt(rows,0).toString();
-            String OrderStatus=(String)order_Status2.getSelectedItem();
-            PreparedStatement ps = con.prepareStatement("UPDATE ord_tbl SET ordStatus = ?,ordEmpId=? WHERE ordId = ?");
-            System.out.println(OrderStatus);
-            System.out.println(orderStatus);
-            ps.setString(1,OrderStatus);
-            ps.setString(2,String.valueOf(global_int));
-            ps.setString(3,OrderID);
-            ps.executeUpdate();
- 
-            
-        }
-        catch(Exception e)
-        {
-            
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void ord_Delivered_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ord_Delivered_TableMouseClicked
         int i=ord_Delivered_Table.getSelectedRow();
         TableModel model=ord_Delivered_Table.getModel();
@@ -324,16 +275,7 @@ public class deliveredOrders extends javax.swing.JFrame {
 
         order_Shipment2.setText(model.getValueAt(i, 2).toString());
         order_Weight2.setText(model.getValueAt(i, 3).toString());
-        String Status=model.getValueAt(i, 4).toString();
-        switch(Status)
-        {
-            case "Pending":
-                order_Status2.setSelectedIndex(0);
-                break;
-            case "Delivered":
-                order_Status2.setSelectedIndex(1);
-                break;
-        }
+        order_Status2.setText(model.getValueAt(i, 4).toString());
         order_Date2.setText(model.getValueAt(i, 5).toString());
 
         //--------Assigning values to class Variables so that it can be used by any methods--------//
@@ -382,7 +324,6 @@ public class deliveredOrders extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -403,7 +344,7 @@ public class deliveredOrders extends javax.swing.JFrame {
     private javax.swing.JLabel order_Date2;
     private javax.swing.JLabel order_Id2;
     private javax.swing.JLabel order_Shipment2;
-    private javax.swing.JComboBox<String> order_Status2;
+    private javax.swing.JLabel order_Status2;
     private javax.swing.JLabel order_Weight2;
     // End of variables declaration//GEN-END:variables
 }

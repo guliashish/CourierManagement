@@ -150,6 +150,11 @@ public class addOrders extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/remove.png"))); // NOI18N
         jButton1.setText("Remove");
         jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         saveChanges_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png"))); // NOI18N
         saveChanges_btn.setText("Save ");
@@ -398,6 +403,14 @@ public class addOrders extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_saveChanges_btnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(ord_Table2.getSelectedRow() != -1) {
+               // remove selected row from the model
+               DefaultTableModel model = (DefaultTableModel) this.ord_Table2.getModel();
+               model.removeRow(ord_Table2.getSelectedRow());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

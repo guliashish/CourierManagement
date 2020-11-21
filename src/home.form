@@ -39,15 +39,10 @@
                           <Component id="employeeBtn" pref="184" max="32767" attributes="0"/>
                           <Component id="newOrderBtn" alignment="0" pref="184" max="32767" attributes="0"/>
                       </Group>
+                      <EmptySpace min="80" pref="80" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="jSeparator3" alignment="0" min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jSeparator4" min="-2" pref="240" max="-2" attributes="0"/>

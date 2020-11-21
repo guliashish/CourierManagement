@@ -148,16 +148,6 @@ public class pendingOrders extends javax.swing.JFrame {
 
         order_Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Delivered" }));
 
-        order_Id.setText("jLabel8");
-
-        order_Content.setText("jLabel8");
-
-        order_Shipment.setText("jLabel8");
-
-        order_Weight.setText("jLabel8");
-
-        order_Date.setText("jLabel8");
-
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/backbtn.png"))); // NOI18N
