@@ -263,7 +263,7 @@ public class deliveredOrders extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new employeeLogin().setVisible(true);
+        new employeeMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

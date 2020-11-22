@@ -375,7 +375,7 @@ public class addOrders extends javax.swing.JFrame {
     }//GEN-LAST:event_ord_TableMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new employeeLogin().setVisible(true);
+        new employeeMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -342,11 +342,10 @@ public class employee extends javax.swing.JFrame {
             {
              global_id = rs.getInt("empId");
              System.out.println(global_id);
-             employeeLogin empLogin =  new employeeLogin(global_id);
-             empLogin.jLabel2.setText(rs.getString(2));
-             empLogin.setVisible(true);
-              this.dispose();
-              
+             employeeMenu empMenu =  new employeeMenu(global_id);
+             empMenu.jLabel2.setText(rs.getString(2));
+             empMenu.setVisible(true);
+             this.dispose();  
             }
             else
             {
