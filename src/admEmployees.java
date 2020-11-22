@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -89,18 +90,6 @@ public class admEmployees extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(adm_Employee_Table);
 
-        adm_emp_Id.setText("jTextField1");
-
-        adm_emp_Name.setText("jTextField1");
-
-        adm_emp_Email.setText("jTextField1");
-
-        adm_emp_Phone.setText("jTextField1");
-
-        adm_emp_Address.setText("jTextField1");
-
-        adm_emp_Password.setText("jTextField1");
-
         jLabel1.setText("ID");
 
         jLabel2.setText("Name");
@@ -114,8 +103,18 @@ public class admEmployees extends javax.swing.JFrame {
         jLabel6.setText("Password");
 
         adm_emp_New.setText("New");
+        adm_emp_New.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adm_emp_NewActionPerformed(evt);
+            }
+        });
 
         adm_emp_Update.setText("Update");
+        adm_emp_Update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adm_emp_UpdateActionPerformed(evt);
+            }
+        });
 
         adm_emp_Remove.setText("Remove");
 
@@ -137,10 +136,10 @@ public class admEmployees extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(adm_emp_Id, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                                    .addComponent(adm_emp_Email, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                                     .addComponent(adm_emp_Name)
-                                    .addComponent(adm_emp_Email))
-                                .addGap(121, 121, 121)
+                                    .addComponent(adm_emp_Id))
+                                .addGap(36, 36, 36)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5)
@@ -149,7 +148,7 @@ public class admEmployees extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(adm_emp_Phone)
                                     .addComponent(adm_emp_Address)
-                                    .addComponent(adm_emp_Password, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(adm_emp_Password, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(adm_emp_Update)
                                 .addGap(45, 45, 45)
@@ -210,6 +209,37 @@ public class admEmployees extends javax.swing.JFrame {
         empPassword=model.getValueAt(i, 5).toString();
         
     }//GEN-LAST:event_adm_Employee_TableMouseClicked
+
+    private void adm_emp_NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adm_emp_NewActionPerformed
+        new employee().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_adm_emp_NewActionPerformed
+
+    private void adm_emp_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adm_emp_UpdateActionPerformed
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+        try(Connection con = DriverManager.getConnection(connectionUrl);)
+        {
+            empId=adm_emp_Id.getText();
+            empName=adm_emp_Name.getText();
+            empEmail=adm_emp_Email.getText();
+            empPhone=adm_emp_Phone.getText();
+            empAddress=adm_emp_Address.getText();
+            empPassword=adm_emp_Password.getText();
+            PreparedStatement ps = con.prepareStatement("UPDATE emp_tbl SET empName=?,empEmail=?,empPhone=?,empAddress=?,empPassword=? WHERE empId = ?");
+            ps.setString(1,empName);
+            ps.setString(2,empEmail);
+            ps.setString(3,empPhone);
+            ps.setString(4,empAddress);
+            ps.setString(5,empPassword);
+            ps.setString(6,empId);
+            ps.executeUpdate(); 
+            JOptionPane.showMessageDialog(this,"Employess Updated Successfully");
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_adm_emp_UpdateActionPerformed
 
     /**
      * @param args the command line arguments

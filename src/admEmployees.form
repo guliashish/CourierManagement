@@ -38,11 +38,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="adm_emp_Id" pref="76" max="32767" attributes="0"/>
-                                  <Component id="adm_emp_Name" max="32767" attributes="0"/>
-                                  <Component id="adm_emp_Email" max="32767" attributes="0"/>
+                                  <Component id="adm_emp_Email" pref="161" max="32767" attributes="0"/>
+                                  <Component id="adm_emp_Name" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="adm_emp_Id" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -51,8 +51,8 @@
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="adm_emp_Phone" max="32767" attributes="0"/>
-                                  <Component id="adm_emp_Address" max="32767" attributes="0"/>
-                                  <Component id="adm_emp_Password" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="adm_emp_Address" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="adm_emp_Password" alignment="0" pref="144" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -140,34 +140,16 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="adm_emp_Id">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="adm_emp_Name">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="adm_emp_Email">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="adm_emp_Phone">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="adm_emp_Address">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="adm_emp_Password">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -203,11 +185,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="New"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adm_emp_NewActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="adm_emp_Update">
       <Properties>
         <Property name="text" type="java.lang.String" value="Update"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adm_emp_UpdateActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="adm_emp_Remove">
       <Properties>
