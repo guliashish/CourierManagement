@@ -191,7 +191,7 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_newOrderBtnActionPerformed
 
     private void adminBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminBtnActionPerformed
-        new admLogin().setVisible(true);
+        new admin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_adminBtnActionPerformed
 
