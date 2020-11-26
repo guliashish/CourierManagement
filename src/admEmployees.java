@@ -117,6 +117,11 @@ public class admEmployees extends javax.swing.JFrame {
         });
 
         adm_emp_Remove.setText("Remove");
+        adm_emp_Remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adm_emp_RemoveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,9 +163,9 @@ public class admEmployees extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addGap(53, 53, 53)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(adm_emp_Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(adm_emp_Phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,35 +216,96 @@ public class admEmployees extends javax.swing.JFrame {
     }//GEN-LAST:event_adm_Employee_TableMouseClicked
 
     private void adm_emp_NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adm_emp_NewActionPerformed
-        new employee().setVisible(true);
-        this.dispose();
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+        try(Connection con = DriverManager.getConnection(connectionUrl);)
+        {
+            if(!(adm_emp_Id.getText().equals("") ||adm_emp_Name.getText().equals("") ||adm_emp_Email.getText().equals("") ||adm_emp_Phone.getText().equals("") || adm_emp_Address.getText().equals("")||adm_emp_Password.getText().equals("")))
+            {
+                empId=adm_emp_Id.getText();
+                empName=adm_emp_Name.getText();
+                empEmail=adm_emp_Email.getText();
+                empPhone=adm_emp_Phone.getText();
+                empAddress=adm_emp_Address.getText();
+                empPassword=adm_emp_Password.getText();
+                PreparedStatement ps = con.prepareStatement("insert into emp_tbl values(?,?,?,?,?)");
+                ps.setString(1,empName);
+                ps.setString(2,empEmail);
+                ps.setString(3,empPhone);
+                ps.setString(4,empAddress);
+                ps.setString(5,empPassword);
+                ps.executeUpdate(); 
+                JOptionPane.showMessageDialog(this,"Employess Inserted Successfully");
+                new admEmployees().setVisible(true);
+                this.dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this,"All Fields are mandatory");
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_adm_emp_NewActionPerformed
 
     private void adm_emp_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adm_emp_UpdateActionPerformed
         String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
         try(Connection con = DriverManager.getConnection(connectionUrl);)
         {
-            empId=adm_emp_Id.getText();
-            empName=adm_emp_Name.getText();
-            empEmail=adm_emp_Email.getText();
-            empPhone=adm_emp_Phone.getText();
-            empAddress=adm_emp_Address.getText();
-            empPassword=adm_emp_Password.getText();
-            PreparedStatement ps = con.prepareStatement("UPDATE emp_tbl SET empName=?,empEmail=?,empPhone=?,empAddress=?,empPassword=? WHERE empId = ?");
-            ps.setString(1,empName);
-            ps.setString(2,empEmail);
-            ps.setString(3,empPhone);
-            ps.setString(4,empAddress);
-            ps.setString(5,empPassword);
-            ps.setString(6,empId);
-            ps.executeUpdate(); 
-            JOptionPane.showMessageDialog(this,"Employess Updated Successfully");
+            if(!(adm_emp_Id.getText().equals("") ||adm_emp_Name.getText().equals("") ||adm_emp_Email.getText().equals("") ||adm_emp_Phone.getText().equals("") || adm_emp_Address.getText().equals("")||adm_emp_Password.getText().equals("")))
+            {
+                empId=adm_emp_Id.getText();
+                empName=adm_emp_Name.getText();
+                empEmail=adm_emp_Email.getText();
+                empPhone=adm_emp_Phone.getText();
+                empAddress=adm_emp_Address.getText();
+                empPassword=adm_emp_Password.getText();
+                PreparedStatement ps = con.prepareStatement("UPDATE emp_tbl SET empName=?,empEmail=?,empPhone=?,empAddress=?,empPassword=? WHERE empId = ?");
+                ps.setString(1,empName);
+                ps.setString(2,empEmail);
+                ps.setString(3,empPhone);
+                ps.setString(4,empAddress);
+                ps.setString(5,empPassword);
+                ps.setString(6,empId);
+                ps.executeUpdate(); 
+                JOptionPane.showMessageDialog(this,"Employess Updated Successfully");
+                new admEmployees().setVisible(true);
+                this.dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this,"All Fields are mandatory");
+            }
         }
         catch(Exception e)
         {
             System.out.println(e);
         }
     }//GEN-LAST:event_adm_emp_UpdateActionPerformed
+
+    private void adm_emp_RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adm_emp_RemoveActionPerformed
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databasename=courier;integratedSecurity=true";
+        try(Connection con = DriverManager.getConnection(connectionUrl);)
+        {
+            if(!(adm_emp_Id.getText().equals("") ))
+            {
+                empId=adm_emp_Id.getText();
+                PreparedStatement ps = con.prepareStatement("DELETE from emp_tbl WHERE empId = ?");
+                ps.setString(1,empId);
+                ps.executeUpdate(); 
+                JOptionPane.showMessageDialog(this,"Employess Deleted Successfully");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this,"All Fields are mandatory");
+            }
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this,"Error"+e);
+        }
+    }//GEN-LAST:event_adm_emp_RemoveActionPerformed
 
     /**
      * @param args the command line arguments

@@ -70,6 +70,11 @@ public class admin extends javax.swing.JFrame {
         Customer_btn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Customer_btn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Customer_btn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Customer_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Customer_btnActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -200,6 +205,11 @@ public class admin extends javax.swing.JFrame {
         new admEmployees().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Employee_btnActionPerformed
+
+    private void Customer_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Customer_btnActionPerformed
+        new admCustomer().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_Customer_btnActionPerformed
 
     /**
      * @param args the command line arguments
