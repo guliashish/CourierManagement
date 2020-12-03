@@ -182,7 +182,8 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_employeeBtnActionPerformed
 
     private void trackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trackBtnActionPerformed
-        // TODO add your handling code here:
+        new trackOrder().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_trackBtnActionPerformed
 
     private void newOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newOrderBtnActionPerformed
