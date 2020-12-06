@@ -3,6 +3,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /*
@@ -62,7 +64,6 @@ public class employee extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Register | Login");
         setLocation(new java.awt.Point(400, 200));
-        setPreferredSize(new java.awt.Dimension(900, 650));
         setSize(new java.awt.Dimension(900, 650));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(900, 650));
@@ -104,8 +105,20 @@ public class employee extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel21.setText("Email");
 
+        empEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                empEmailFocusLost(evt);
+            }
+        });
+
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel22.setText("Phone No.");
+
+        empPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                empPhoneFocusLost(evt);
+            }
+        });
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel23.setText("Address");
@@ -373,6 +386,27 @@ public class employee extends javax.swing.JFrame {
     private void empNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_empNameActionPerformed
+
+    private void empPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_empPhoneFocusLost
+        Pattern pattern = Pattern.compile("\\d{10}");
+        Matcher matcher = pattern.matcher(empPhone.getText());
+
+        if (!(matcher.matches())) 
+        {
+          JOptionPane.showMessageDialog(this,"Phone Number must be in the form XXXXXXXXXX");
+          empPhone.setText("");
+        } 
+    }//GEN-LAST:event_empPhoneFocusLost
+
+    private void empEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_empEmailFocusLost
+        String expression = "^[A-Za-z0-9_.]+[@][A-Za-z.]+$";
+        Pattern p = Pattern.compile(expression);
+        Matcher m = p.matcher(empEmail.getText());
+        if(!m.matches())
+        {
+        JOptionPane.showMessageDialog(null, "Email not valid");
+        }   
+    }//GEN-LAST:event_empEmailFocusLost
 
     /**
      * @param args the command line arguments

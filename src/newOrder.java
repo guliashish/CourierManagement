@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -134,6 +137,17 @@ public class newOrder extends javax.swing.JFrame {
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("Pickup From");
 
+        custPickPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                custPickPhoneFocusLost(evt);
+            }
+        });
+        custPickPhone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                custPickPhoneActionPerformed(evt);
+            }
+        });
+
         custPickAddress.setColumns(20);
         custPickAddress.setRows(5);
         jScrollPane1.setViewportView(custPickAddress);
@@ -141,6 +155,12 @@ public class newOrder extends javax.swing.JFrame {
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel30.setText("Delivery To");
+
+        custDelPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                custDelPhoneFocusLost(evt);
+            }
+        });
 
         custDelAddress.setColumns(20);
         custDelAddress.setRows(5);
@@ -447,6 +467,31 @@ public class newOrder extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void custDelPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_custDelPhoneFocusLost
+        Pattern pattern = Pattern.compile("\\d{10}");
+      Matcher matcher = pattern.matcher(custDelPhone.getText());
+
+      if (!(matcher.matches())) {
+          JOptionPane.showMessageDialog(this,"Phone Number must be in the form XXXXXXXXXX");
+          custDelPhone.setText("");
+      } 
+    }//GEN-LAST:event_custDelPhoneFocusLost
+
+    private void custPickPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_custPickPhoneFocusLost
+        Pattern pattern = Pattern.compile("\\d{10}");
+        Matcher matcher = pattern.matcher(custPickPhone.getText());
+
+        if (!(matcher.matches())) 
+        {
+          JOptionPane.showMessageDialog(this,"Phone Number must be in the form XXXXXXXXXX");
+          custPickPhone.setText("");
+        } 
+    }//GEN-LAST:event_custPickPhoneFocusLost
+
+    private void custPickPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custPickPhoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_custPickPhoneActionPerformed
 
     /**
      * @param args the command line arguments

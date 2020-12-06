@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -343,7 +344,9 @@ public class pendingOrders extends javax.swing.JFrame {
             ps.setString(2,String.valueOf(global_int));
             ps.setString(3,OrderID);
             ps.executeUpdate();
- 
+            JOptionPane.showMessageDialog(null, "Orders Added Successfully");
+            new pendingOrders().setVisible(true);
+            this.dispose();
             
         }
         catch(Exception e)
