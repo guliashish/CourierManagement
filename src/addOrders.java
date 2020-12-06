@@ -395,6 +395,9 @@ public class addOrders extends javax.swing.JFrame {
                 ps.setString(2,String.valueOf(global_int));
                 ps.setString(3,OrderID);
                 ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Orders Added Successfully");
+                new addOrders().setVisible(true);
+                this.dispose();
             }
             
         }

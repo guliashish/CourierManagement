@@ -481,10 +481,15 @@ public class admCustomer extends javax.swing.JFrame {
                 custId=adm_cust_Id.getText();
                 PreparedStatement ps = con.prepareStatement("DELETE from cust_tbl WHERE custId = ?");
                 ps.setString(1,custId);
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(this,"Customer Deleted Successfully");
-                new admCustomer().setVisible(true);
-                this.dispose();
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Are sure you want to Remove Customer", "Delete Employee", dialogButton);
+                if(dialogResult == 0) 
+                {
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(this,"Customer Deleted Successfully");
+                    new admCustomer().setVisible(true);
+                    this.dispose();
+                } 
             }
             else
             {
